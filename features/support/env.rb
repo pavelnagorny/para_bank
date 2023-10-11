@@ -1,9 +1,9 @@
 require 'capybara'
 require 'capybara/cucumber'
+require 'require_all'
+require 'selenium-webdriver'
 require 'site_prism'
 
-Capybara.default_driver = :selenium # You can change this based on your preferred browser driver
-Capybara.app_host = 'https://example.com' # Replace with the base URL of your application
-
-World(Capybara::DSL)
-
+require_all 'utils'
+require_all 'features/support'
+require_all 'pages'
