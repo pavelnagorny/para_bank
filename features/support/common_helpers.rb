@@ -14,6 +14,7 @@ module CommonHelpers
     File.open('./reports/temp/registered_user.yml', 'a') do |file|
       YAML.dump(user, file)
     end
+    LOGGER.info "User was saved to /reports/temp"
   end
 
   def clean_up_data(path_to_folder, file_types)
@@ -22,5 +23,6 @@ module CommonHelpers
         File.delete(file) if File.file?(file)
       end
     end
+    LOGGER.info "Cleaning up test data from previous run"
   end
 end
