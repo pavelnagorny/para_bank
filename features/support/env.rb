@@ -1,6 +1,7 @@
 require 'capybara'
 require 'capybara/cucumber'
 require 'excon'
+require 'ox'
 require 'logger'
 require 'nokogiri'
 require 'require_all'

@@ -2,7 +2,7 @@
 
 require_relative '../../models/user'
 
-user_created = false
+user_data_created = false
 
 Before do |scenario|
   LOGGER.info "Current test case dwells in #{scenario.location}"
@@ -17,13 +17,21 @@ Before do
   Support::BrowserUtils.create_session
 end
 
+Before('@web_ui') do
+  @login_page = Pages::LoginPage.new
+end
+
+Before('@api') do
+  @api_client = Support::APIClient.new
+end
+
 Before do
-  unless user_created
+  unless user_data_created
     USER = Models::User.new
     save_to_file(USER.to_hash)
   end
-  LOGGER.info "Creating user: #{USER}"
-  user_created = true
+  LOGGER.info "Generate user data: #{USER}"
+  user_data_created = true
 end
 
 After do |scenario|
