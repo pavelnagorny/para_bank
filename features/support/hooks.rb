@@ -1,15 +1,7 @@
 # frozen_string_literal: true
 
-# require_relative '../../models/user'
-
-# user_data_created = false
-
 Before do |scenario|
   LOGGER.info "Current test case dwells in #{scenario.location}"
-end
-
-Before do
-  # clean_up_data('reports', %w[png yml])
 end
 
 Before do
