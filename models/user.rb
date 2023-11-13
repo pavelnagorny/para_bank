@@ -6,6 +6,7 @@ module Models
   class User
     include CommonHelpers
     attr_reader :username, :password, :firstname, :lastname, :phone_number, :address, :city, :zip, :state, :ssn
+    attr_accessor :account_ids
 
     def initialize
       @firstname = Faker::Name.first_name
@@ -18,6 +19,7 @@ module Models
       @ssn = Faker::IDNumber.ssn_valid
       @username = firstname + "_" + Faker::Alphanumeric.alphanumeric(number: 8)
       @password = 'password'
+      @account_ids = []
     end
   end
 end

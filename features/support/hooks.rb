@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require_relative '../../models/user'
+# require_relative '../../models/user'
 
-user_data_created = false
+# user_data_created = false
 
 Before do |scenario|
   LOGGER.info "Current test case dwells in #{scenario.location}"
 end
 
 Before do
-  clean_up_data('reports', %w[png yml])
+  # clean_up_data('reports', %w[png yml])
 end
 
 Before do
@@ -23,15 +23,6 @@ end
 
 Before('@api') do
   @api_client = Support::APIClient.new
-end
-
-Before do
-  unless user_data_created
-    USER = Models::User.new
-    save_to_file(USER.to_hash)
-  end
-  LOGGER.info "Generate user data: #{USER}"
-  user_data_created = true
 end
 
 After do |scenario|

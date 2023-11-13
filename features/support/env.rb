@@ -1,13 +1,18 @@
+# frozen_string_literal: true
+
+require 'dotenv/load'
+require 'active_support/all'
 require 'capybara'
 require 'capybara/cucumber'
 require 'excon'
-require 'ox'
 require 'logger'
 require 'nokogiri'
 require 'require_all'
 require 'selenium-webdriver'
 require 'site_prism'
 require 'yaml'
+
+Dotenv.load('config/.env')
 
 require_all 'features/support'
 require_all 'pages'

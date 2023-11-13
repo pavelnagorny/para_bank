@@ -13,9 +13,9 @@ module Pages
       login_button.click
     end
 
-    def login
-      username_field.set(USER.username)
-      password_field.set(USER.password)
+    def login(user)
+      username_field.set(user.username)
+      password_field.set(user.password)
       click_login_button
     end
 

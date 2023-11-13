@@ -14,13 +14,16 @@ module Support
       @token = @response.headers['Set-Cookie'].split(';').first
     end
 
-    def api_client_auth(username, password)
+    def api_client_auth(user)
       headers = CommonVars::API_HEADERS.merge('Cookie' => @token)
       @response = @http_conn.post(path: CommonVars::LOGIN_API_HOST,
-                                  body: URI.encode_www_form(username: username, password: password),
+                                  body: URI.encode_www_form(username: user.username, password: user.password),
                                   headers: headers)
       case @response.status
       when 302
+        new_location = @response.headers['Location']
+        @response = @http_conn.get(path: new_location,
+                                   headers: { 'Cookie' => @token })
         LOGGER.info "Request was successful: #{@response.status}"
       when 400..499
         LOGGER.error "Client error occurred: #{@response.status}"
@@ -89,16 +92,15 @@ module Support
       @response
     end
 
-
     def get_reg_token
       @response = @http_conn.get(path: '/parabank/register.htm')
       @token = @response.headers['Set-Cookie'].split(';').first
     end
 
-    def api_register_new_user(member)
+    def api_register_new_user(user)
       get_reg_token
       headers = CommonVars::API_HEADERS.merge(:Cookie => @token)
-      request_body = new_user_payload(member)
+      request_body = new_user_payload(user)
       @response = @http_conn.post(path: CommonVars::REGISTER_API_HOST,
                                   body: request_body,
                                   headers: headers)

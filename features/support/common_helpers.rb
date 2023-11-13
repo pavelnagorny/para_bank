@@ -17,6 +17,10 @@ module CommonHelpers
     LOGGER.info "User was saved to /reports/temp"
   end
 
+  def read_from_file(filename: './reports/temp/registered_user.yml')
+    YAML.load_file(filename)
+  end
+
   def clean_up_data(path_to_folder, file_types)
     file_types.each do |file_type|
       Dir.glob(File.join(path_to_folder, '**', "*.{#{file_type}}")).each do |file|
@@ -24,5 +28,12 @@ module CommonHelpers
       end
     end
     LOGGER.info "Cleaning up test data from previous run"
+  end
+
+  def generate_user_data
+    user = Models::User.new
+    save_to_file(user.to_hash)
+    LOGGER.info "Generate user data: #{user}"
+    user
   end
 end
