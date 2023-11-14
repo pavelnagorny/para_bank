@@ -15,16 +15,23 @@ module Support
         Capybara.default_max_wait_time = 10
 
         options = Selenium::WebDriver::Chrome::Options.new
-        if ENV['PLATFORM'] == 'docker'
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+
+        unless ENV['PLATFORM'] == 'localhost'
           options.binary = "/usr/bin/chromium"
           options.add_argument('--headless')
           options.add_argument('--user-data-dir=/usr/src/tests/reports/temp/user-data-directory')
         end
-        options.add_argument('--disable-gpu')
-        options.add_argument('--no-sandbox')
-        options.add_argument("--window-size=#{ENV['RESOLUTION']}")
-        options.add_argument('--disable-dev-shm-usage')
-        initialize_driver(options)
+
+        LOGGER.info "Initializing Chrome browser with options: #{options.as_json}"
+        begin
+          initialize_driver(options)
+        rescue StandardError => e
+          puts
+          LOGGER.error "Error initializing Chrome driver: #{e.message}"
+        end
       end
     end
   end
