@@ -9,7 +9,6 @@ module Support
         end
       end
 
-      # TODO: Fix docker run
       def create_session
         Capybara.default_driver = :chrome
         Capybara.default_max_wait_time = 10
