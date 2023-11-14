@@ -33,7 +33,7 @@ module CommonHelpers
   def generate_user_data
     user = Models::User.new
     save_to_file(user.to_hash)
-    LOGGER.info "Generate user data: #{user}"
+    LOGGER.info "Generate user data: #{user.to_hash}"
     user
   end
 end
