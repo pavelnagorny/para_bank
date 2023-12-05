@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CommonHelpers
+module CommonHelper
   def to_hash
     instance_variables.each_with_object({}) do |var, hash|
       key = var.to_s.delete('@').to_sym

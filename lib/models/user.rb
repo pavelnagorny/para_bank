@@ -4,7 +4,7 @@ require 'faker'
 
 module Models
   class User
-    include CommonHelpers
+    include CommonHelper
     attr_reader :username, :password, :firstname, :lastname, :phone_number, :address, :city, :zip, :state, :ssn
     attr_accessor :account_ids
 

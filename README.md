@@ -1,5 +1,22 @@
 # Test Framework README
 
+# Test Framework README
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Prerequisites](#prerequisites)
+3. [Docker Setup](#docker-setup)
+    - 3.1 [docker-compose.yml](#docker-composeyml)
+    - 3.2 [Dockerfile](#dockerfile)
+4. [Environment Configuration](#environment-configuration)
+5. [Switching to the Gemset](#switching-to-the-gemset)
+6. [Project Structure](#project-structure)
+7. [Running Tests](#running-tests)
+    - 7.1 [In Docker Container](#running-tests-in-docker-container)
+    - 7.2 [Locally](#running-tests-locally)
+
+
 ## Overview
 
 This repository contains a comprehensive test framework designed for testing the Parabank web application. The framework is Dockerized, allowing for easy setup and execution of tests in a controlled environment.
@@ -28,6 +45,13 @@ The Dockerfile sets up the Ruby 3.2.1 runtime and installs necessary dependencie
 
 ## Environment Configuration
 The .env file is used to configure the platform for test execution. Currently, it is set to host.docker.internal. Adjust this file as needed for your testing environment.
+
+## Switching to the Gemset
+To use the "parabank_gems" gemset, open your terminal and run the following command:
+
+```bash
+rvm gemset use parabank_gems
+```
 
 ## Project Structure
 The main project structure is organized as follows:

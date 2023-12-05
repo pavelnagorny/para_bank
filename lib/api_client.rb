@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-require_relative 'api_helpers'
+require_relative 'helpers/api_helper'
 
 module Support
   class APIClient
     class ItemNotSupported < StandardError; end
-    include APIHelpers
+    include APIHelper
     def initialize
       @http_conn = Excon.new(CommonVars::BASE_URL)
     end
