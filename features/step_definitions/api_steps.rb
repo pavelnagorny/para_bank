@@ -5,8 +5,9 @@ When('I register a {parameter} on API') do |user|
   @users ||= []
   new_user = instance_variable_get("@#{user}")
   @users << new_user
+  new_user_payload = FactoryBot.build(:new_user_registration_payload, user: new_user)
 
-  @api_client.api_register_new_user(new_user)
+  @api_client.api_register_new_user(new_user_payload)
 end
 
 When('I sign in as s {variable} on API') do |user|

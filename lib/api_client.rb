@@ -97,12 +97,11 @@ module Support
       @token = @response.headers['Set-Cookie'].split(';').first
     end
 
-    def api_register_new_user(user)
+    def api_register_new_user(request_body)
       get_reg_token
       headers = CommonVars::API_HEADERS.merge(:Cookie => @token)
-      request_body = new_user_payload(user)
       @response = @http_conn.post(path: CommonVars::REGISTER_API_HOST,
-                                  body: request_body,
+                                  body: URI.encode_www_form(request_body),
                                   headers: headers)
       case @response.status
       when 200
