@@ -26,7 +26,7 @@ This repository contains a comprehensive test framework designed for testing the
 Before running the tests, ensure you have the following prerequisites installed on your system:
 
 - Docker
-- Ruby `3.2.1`
+- Ruby `3.2.2`
 - Bundler
 
 ## Docker Setup
@@ -41,7 +41,7 @@ docker-compose up
 This will launch the Parabank application and execute the test suite within the Docker container.
 
 ## Dockerfile
-The Dockerfile sets up the Ruby 3.2.1 runtime and installs necessary dependencies for running tests, including Chromium and the corresponding driver. The working directory is set to /usr/src/parabank, where the necessary files are copied, and Ruby dependencies are installed using Bundler. The entry point is configured to run the Cucumber tests.
+The Dockerfile sets up the Ruby 3.2.2 runtime and installs necessary dependencies for running tests, including Chromium and the corresponding driver. The working directory is set to /usr/src/parabank, where the necessary files are copied, and Ruby dependencies are installed using Bundler. The entry point is configured to run the Cucumber tests.
 
 ## Environment Configuration
 The .env file is used to configure the platform for test execution. Currently, it is set to host.docker.internal. Adjust this file as needed for your testing environment.

@@ -10,5 +10,5 @@ Feature: Example Feature
     And I navigate to the Accounts Overview page
     And I retrieve all 'user 2' account ids
     And I navigate to the Bill Pay page
-    And I pay 100 from 'user_2' to 'user_1' account
+    And I pay 100 from 'user 2' to 'user 1' account
     Then I see bill payment was successful
