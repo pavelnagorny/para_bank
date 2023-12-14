@@ -10,6 +10,7 @@ require 'nokogiri'
 require 'require_all'
 require 'factory_bot'
 require 'selenium-webdriver'
+require 'simplecov'
 require 'site_prism'
 require 'yaml'
 

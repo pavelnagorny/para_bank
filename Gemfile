@@ -15,4 +15,5 @@ gem 'nokogiri'
 gem 'require_all'
 gem 'rspec'
 gem 'selenium-webdriver'
+gem 'simplecov', require: false
 gem 'site_prism'
