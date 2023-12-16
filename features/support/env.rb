@@ -2,17 +2,21 @@
 
 require 'dotenv/load'
 require 'active_support/all'
-require 'capybara'
+require 'cucumber'
 require 'capybara/cucumber'
+require 'selenium-webdriver'
 require 'excon'
 require 'logger'
 require 'nokogiri'
 require 'require_all'
 require 'factory_bot'
-require 'selenium-webdriver'
 require 'simplecov'
 require 'site_prism'
 require 'yaml'
+require 'webdrivers'
+
+require 'capybara'
+require 'appium_capybara'
 
 Dotenv.load('config/.env')
 

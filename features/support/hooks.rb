@@ -13,12 +13,32 @@ Before do |scenario|
   LOGGER.info "Current test case dwells in #{scenario.location}"
 end
 
-Before do
-  LOGGER.info "Creating browser session"
-  Support::BrowserUtils.create_session
+Before('@android') do
+  chromedriver_version = '91.0.4472.101'
+  install_dir = '/Users/pnago/RubymineProjects/para_bank/drivers'
+
+
+  Webdrivers::Chromedriver.required_version = chromedriver_version
+  Webdrivers.install_dir = install_dir
+
+  # Check if the ChromeDriver executable exists
+  chromedriver_executable = File.join(install_dir, 'chromedriver')
+  if File.exist?(chromedriver_executable)
+    LOGGER.info "ChromeDriver #{chromedriver_version} is installed in #{install_dir}"
+  else
+    LOGGER.info "ChromeDriver #{chromedriver_version} is not installed. Downloading..."
+    Webdrivers::Chromedriver.update
+    LOGGER.info "ChromeDriver #{chromedriver_version} installed!"
+
+  end
+
+  LOGGER.info 'Creating android emulator session'
+  Support::BrowserUtils.create_android_session
 end
 
 Before('@web_ui') do
+  LOGGER.info 'Creating browser session'
+  Support::BrowserUtils.create_web_session
   @login_page = Pages::LoginPage.new
 end
 
@@ -36,6 +56,6 @@ After do |scenario|
   else
     LOGGER.info "===>>> PASSED <<<===: Scenario: #{scenario.name}"
   end
-  LOGGER.info "Reset Capybara session"
+  LOGGER.info 'Reset Capybara session'
   Capybara.reset_session!
 end

@@ -1,0 +1,8 @@
+[caps]
+  automationName = 'UiAutomator2'
+  deviceName = 'emulator-5554'
+  platformName = 'Android'
+  platformVersion = '12.0'
+  chromedriverExecutable = '/Users/pnago/RubymineProjects/para_bank/drivers/chromedriver'
+  browserName = 'Chrome'
+  newCommandTimeout = 30000
