@@ -17,7 +17,6 @@ Before('@android') do
   chromedriver_version = '91.0.4472.101'
   install_dir = '/Users/pnago/RubymineProjects/para_bank/drivers'
 
-
   Webdrivers::Chromedriver.required_version = chromedriver_version
   Webdrivers.install_dir = install_dir
 
@@ -50,7 +49,7 @@ After do |scenario|
   screen_path = "reports/scr/#{Time.now.strftime('%Y-%m-%d_%H:%M:%S')}_#{scenario.name}_error.png"
   if scenario.failed?
     LOGGER.error "===>>> FAILED <<<===: Scenario: #{scenario.name}"
-    LOGGER.error   "#{scenario.exception.message}"
+    LOGGER.error scenario.exception.message.to_s
     LOGGER.info "Save a screenshot: #{screen_path}"
     Capybara.save_screenshot(screen_path)
   else

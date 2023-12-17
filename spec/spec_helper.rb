@@ -11,7 +11,7 @@ require_relative '../patches/factory_bot/attribute_hash'
 
 Dotenv.load('config/.env')
 
-LOGGER = Logger.new(STDOUT)
+LOGGER = Logger.new($stdout)
 LOGGER.level = Logger::DEBUG
 LOGGER.formatter = proc do |severity, datetime, _progname, msg|
   "#{datetime.strftime('%Y-%m-%d %H:%M:%S')} #{severity}: #{msg}\n"

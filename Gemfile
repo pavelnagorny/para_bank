@@ -13,7 +13,7 @@ gem 'faker'
 gem 'nokogiri'
 gem 'require_all'
 gem 'rspec'
-gem 'rubocop', group: 'development', require: false
+gem 'rubocop', require: false
 gem 'selenium-webdriver'
 gem 'simplecov', require: false
 gem 'site_prism'

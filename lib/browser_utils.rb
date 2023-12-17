@@ -6,7 +6,7 @@ module Support
       # Register driver
       def register_chrome_driver(options)
         Capybara.register_driver :chrome do |app|
-          Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+          Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
         end
       end
 

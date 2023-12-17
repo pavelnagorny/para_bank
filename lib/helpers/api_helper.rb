@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module APIHelper
-
   def parse_html
     Nokogiri::HTML(@response.body)
   end
@@ -25,7 +24,7 @@ module APIHelper
 
   def extract_customer_id_from_html
     script_content = parse_html.at_xpath("//script[contains(text(), 'services_proxy/bank/customers/')]").text
-    match_data = script_content.match(/(\d+) \+ "\/accounts"/)
+    match_data = script_content.match(%r{(\d+) \+ "/accounts"})
 
     match_data.nil? ? nil : match_data[1]
   end

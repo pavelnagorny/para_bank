@@ -3,11 +3,11 @@
 module Pages
   class TransferFundsPage < SitePrism::Page
     element :amount_field, '#amount'
-    element :from_account_dropdown , '#fromAccountId'
-    element :to_account_dropdown , '#toAccountId'
-    element :transfer_button , :xpath, '//input[@value="Transfer"]'
+    element :from_account_dropdown, '#fromAccountId'
+    element :to_account_dropdown, '#toAccountId'
+    element :transfer_button, :xpath, '//input[@value="Transfer"]'
 
-    def set_transfer_amount(amount)
+    def enter_transfer_amount(amount)
       amount_field.set(amount)
     end
 
@@ -20,7 +20,7 @@ module Pages
     end
 
     def transfer_funds(amount, from_account, to_account)
-      set_transfer_amount(amount)
+      enter_transfer_amount(amount)
       select_from_account(from_account)
       select_to_account(to_account)
       transfer_button.click

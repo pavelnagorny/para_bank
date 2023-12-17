@@ -28,7 +28,7 @@ require_all 'features/support'
 require_all 'lib'
 require_all 'pages'
 
-LOGGER = Logger.new(STDOUT)
+LOGGER = Logger.new($stdout)
 # Set the logging level (DEBUG, INFO, WARN, ERROR, FATAL)
 LOGGER.level = Logger::DEBUG
 

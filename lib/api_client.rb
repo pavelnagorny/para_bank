@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'helpers/api_helper'
 
 module Support
@@ -9,7 +10,7 @@ module Support
       @http_conn = Excon.new(CommonVars::BASE_URL)
     end
 
-    def get_api_token
+    def retrieve_api_token
       @response = @http_conn.get(path: CommonVars::INDEX_API_HOST)
       @token = @response.headers['Set-Cookie'].split(';').first
     end
@@ -18,7 +19,7 @@ module Support
       headers = CommonVars::API_HEADERS.merge('Cookie' => @token)
       @response = @http_conn.post(path: CommonVars::LOGIN_API_HOST,
                                   body: URI.encode_www_form(username: user.username, password: user.password),
-                                  headers: headers)
+                                  headers:)
       case @response.status
       when 302
         new_location = @response.headers['Location']
@@ -38,8 +39,8 @@ module Support
     def api_client_get(path:, additional_headers: {})
       headers = { 'Cookie' => @token }
       headers.merge!(additional_headers) if additional_headers
-      @response = @http_conn.get(path: path,
-                                 headers: headers)
+      @response = @http_conn.get(path:,
+                                 headers:)
 
       case @response.status
       when 200..299
@@ -57,9 +58,9 @@ module Support
     def api_client_post(path:, request_body:, additional_headers: {})
       headers = { 'Cookie' => @token }
       headers.merge!(additional_headers) if additional_headers
-      @response = @http_conn.post(path: path,
+      @response = @http_conn.post(path:,
                                   body: request_body,
-                                  headers: headers)
+                                  headers:)
       case @response.status
       when 200..299
         LOGGER.info "Request was successful: #{@response.status}"
@@ -76,9 +77,9 @@ module Support
     def api_client_post_with_params(path:, params:, additional_headers: {})
       headers = { 'Cookie' => @token }
       headers.merge!(additional_headers) if additional_headers
-      @response = @http_conn.post(path: path,
+      @response = @http_conn.post(path:,
                                   query: params,
-                                  headers: headers)
+                                  headers:)
       case @response.status
       when 200..299
         LOGGER.info "Request was successful: #{@response.status}"
@@ -92,17 +93,17 @@ module Support
       @response
     end
 
-    def get_reg_token
+    def retrieve_reg_token
       @response = @http_conn.get(path: '/parabank/register.htm')
       @token = @response.headers['Set-Cookie'].split(';').first
     end
 
     def api_register_new_user(request_body)
-      get_reg_token
-      headers = CommonVars::API_HEADERS.merge(:Cookie => @token)
+      retrieve_reg_token
+      headers = CommonVars::API_HEADERS.merge(Cookie: @token)
       @response = @http_conn.post(path: CommonVars::REGISTER_API_HOST,
                                   body: URI.encode_www_form(request_body),
-                                  headers: headers)
+                                  headers:)
       case @response.status
       when 200
         LOGGER.info "Request was successful: #{@response.status}"

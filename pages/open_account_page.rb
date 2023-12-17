@@ -11,7 +11,7 @@ module Pages
       open_new_account_button.click
     end
 
-    def get_new_account_id
+    def return_new_account_id
       new_account_id_text.text
     end
 
@@ -19,7 +19,7 @@ module Pages
       account_type_dropdown.click
       find(:xpath, "//option[text()='#{type}']")
       click_open_account_button
-      get_new_account_id
+      return_new_account_id
     end
   end
 end

@@ -17,7 +17,7 @@ module Models
       @zip = Faker::Address.zip
       @phone_number = Faker::PhoneNumber.cell_phone_in_e164
       @ssn = Faker::IDNumber.ssn_valid
-      @username = firstname + "_" + Faker::Alphanumeric.alphanumeric(number: 8)
+      @username = "#{firstname}_#{Faker::Alphanumeric.alphanumeric(number: 8)}"
       @password = 'password'
       @account_ids = []
     end

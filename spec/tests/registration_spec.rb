@@ -13,7 +13,7 @@ RSpec.describe 'API user registration' do
   end
 
   it 'creates a user with a valid payload' do
-    api_reg_payload = FactoryBot.build(:new_user_registration_payload, user: user)
+    api_reg_payload = FactoryBot.build(:new_user_registration_payload, user:)
     # Perform your API request using the generated payload
     response = api_client.api_register_new_user(api_reg_payload)
     # Add your assertions based on the API response

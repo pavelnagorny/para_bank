@@ -41,11 +41,11 @@ end
 Then('I login as a {variable}') do |user|
   @login_page.login(user)
   @main_page = Pages::MainPage.new
-  expect(page).to have_content("Accounts Overview")
+  expect(page).to have_content('Accounts Overview')
 end
 
 Then(/^I see the account is open$/) do
-  expect(page).to have_content("Congratulations, your account is now open.")
+  expect(page).to have_content('Congratulations, your account is now open.')
 end
 
 And(/^I navigate to the Accounts Overview page$/) do
@@ -69,15 +69,15 @@ And('I transfer {int} to the newly created account for {variable} user') do |amo
 end
 
 Then(/^I see money was transferred$/) do
-  expect(page).to have_content("$#{@amount}.00 has been transferred from account "\
+  expect(page).to have_content("$#{@amount}.00 has been transferred from account " \
                                "##{@user.account_ids.first} to account ##{@user.account_ids.last}.")
 
-  LOGGER.info "$#{@amount}.00 has been transferred from account "\
-                "##{@user.account_ids.first} to account ##{@user.account_ids.last}."
+  LOGGER.info "$#{@amount}.00 has been transferred from account " \
+              "##{@user.account_ids.first} to account ##{@user.account_ids.last}."
 end
 
 And('I retrieve all {variable} account ids') do |user|
-  account_ids = @accounts_overview_page.get_all_accounts
+  account_ids = @accounts_overview_page.return_all_accounts
   user.account_ids = account_ids
 
   LOGGER.info "All user account IDs: #{user.account_ids}"
@@ -89,8 +89,8 @@ And('I pay {int} from {variable} to {variable} account') do |amount, from_user, 
 end
 
 Then(/^I see bill payment was successful$/) do
-  expect(page).to have_content("Bill Payment to #{@user_1.firstname} in the amount of $#{@amount}.00 from account "\
-                                 "#{@user_2.account_ids.first} was successful.")
+  expect(page).to have_content("Bill Payment to #{@user_1.firstname} in the amount of $#{@amount}.00 from account " \
+                               "#{@user_2.account_ids.first} was successful.")
 
   LOGGER.info "Bill Payment from account #{@user_2.account_ids.first} was successful."
 end
