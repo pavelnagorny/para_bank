@@ -1,7 +1,5 @@
 # Test Framework README
 
-# Test Framework README
-
 ## Table of Contents
 
 1. [Overview](#overview)
