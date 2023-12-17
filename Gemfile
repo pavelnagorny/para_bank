@@ -13,9 +13,7 @@ gem 'faker'
 gem 'nokogiri'
 gem 'require_all'
 gem 'rspec'
-gem 'rubocop', require: false
 gem 'selenium-webdriver'
-gem 'simplecov', require: false
 gem 'site_prism'
 gem 'webdrivers', '= 5.3.0'
 
@@ -23,3 +21,7 @@ gem 'webdrivers', '= 5.3.0'
 gem 'appium_capybara'
 gem 'appium_lib'
 gem 'capybara'
+
+# code analysis
+gem 'rubocop', require: false
+gem 'simplecov', require: false
