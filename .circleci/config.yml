@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  SCAR:
+  linter-check:
     docker:
       - image: ruby:3.2.2
     steps:
@@ -12,9 +12,36 @@ jobs:
             bundle install
             bundle exec rubocop --format simple --fail-level E
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
+  build-app:
+    docker:
+      - image: parasoft/parabank:latest
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+      - image: ruby:3.2.2
+    working_directory: /usr/src/parabank
+
+    steps:
+      - checkout
+
+      # Run your tests in the second container
+      - run:
+          name: Run Cucumber Tests
+          command: |
+            docker-compose up -d webapp
+            docker-compose run tests
+
 workflows:
-  say-hello-workflow:
+  version: 2
+  build:
     jobs:
-      - SCAR
+      - linter-check:
+          filters:
+            branches:
+              only:
+                - master
+      - build-app:
+          filters:
+            branches:
+              only:
+                - master
