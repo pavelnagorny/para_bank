@@ -5,6 +5,7 @@ ruby '3.2.2'
 source 'https://rubygems.org'
 
 gem 'activesupport'
+gem 'allure-cucumber'
 gem 'cucumber'
 gem 'dotenv'
 gem 'excon'

@@ -52,6 +52,10 @@ After do |scenario|
     LOGGER.error scenario.exception.message.to_s
     LOGGER.info "Save a screenshot: #{screen_path}"
     Capybara.save_screenshot(screen_path)
+    Allure.add_attachment(name: 'Failure screen',
+                          source: File.open(screen_path),
+                          type: Allure::ContentType::PNG,
+                          test_case: true)
   else
     LOGGER.info "===>>> PASSED <<<===: Scenario: #{scenario.name}"
   end
