@@ -1,5 +1,5 @@
 # Use an official Ruby runtime as a parent image
-FROM ruby:3.2.1
+FROM ruby:3.2.2
 
 RUN apt-get update && apt-get install -y \
     chromium \

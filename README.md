@@ -74,3 +74,10 @@ Change `PLATFORM` value in `config/.env` to `localhost` or execute with the next
 PLATFORM=localhost cucumber features/
 ```
 Test results will be available in the ./reports directory.
+
+## Allure report
+To open allure report manually:
+
+```bash
+allure serve reports/allure-results -h localhost
+```

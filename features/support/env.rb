@@ -14,7 +14,6 @@ require 'simplecov'
 require 'site_prism'
 require 'yaml'
 require 'webdrivers'
-
 require 'capybara'
 require 'appium_capybara'
 
