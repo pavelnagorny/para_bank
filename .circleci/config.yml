@@ -40,8 +40,10 @@ workflows:
             branches:
               only:
                 - master
+                - circleci-project-setup
       - build-app:
           filters:
             branches:
               only:
                 - master
+                - circleci-project-setup
