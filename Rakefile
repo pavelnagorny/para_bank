@@ -25,6 +25,11 @@ task :run_web_tests do
   sh 'bundle exec cucumber features/tests/web'
 end
 
+desc 'Rake task for running cucumber web tests in parallel'
+task :run_web_tests_parallel do
+  sh 'bundle exec parallel_cucumber -o features/test/web/ -o "-r features --format AllureCucumber::Formatter --out reports/allure-results"'
+end
+
 desc 'Rake task for running RSpec '
 task :run_rspec_tests do
   sh 'bundle exec cucumber features/tests/android/'
