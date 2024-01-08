@@ -15,7 +15,7 @@ jobs:
             bundle install
             bundle exec rubocop --format simple --fail-level E
 
-  authenticate-with-docker-hub:
+  build-and-test:
     docker:
       - image: docker:20.10.17
     steps:
@@ -25,35 +25,26 @@ jobs:
           command:
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
-  build-app:
-    docker:
-      - image: docker:20.10.17
-    steps:
-      - checkout
       - run:
-          name: Pull Test App Container
+          name: Install Docker Compose
+          environment:
+            COMPOSE_VERSION: '1.29.2'
           command: |
-            apt-get install sudo
-            sudo apt-get update
-            sudo systemctl status docker
-            sudo systemctl start docker
-            sudo usermod -aG docker $USER
-            sudo systemctl status docker
-            docker-compose pull webapp
+            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
-  run-tests:
-    docker:
-      - image: docker:20.10.17
-    steps:
-      - checkout
+      - setup_remote_docker
+
       - run:
-          name: Build Container with Tests
+          name: Build Webapp Container
           command: |
-            docker-compose up -d webapp
+            docker-compose -f docker-compose.yml build webapp
+
       - run:
-          name: Execute Tests
+          name: Run Tests
           command: |
-            docker-compose run tests
+            docker-compose -f docker-compose.yml run tests
 
 workflows:
   version: 2
@@ -65,11 +56,8 @@ workflows:
               only:
                 - master
                 - circleci-project-setup
-      - authenticate-with-docker-hub
-      - build-app:
-          requires:
-            - authenticate-with-docker-hub
-      - run-tests:
-          requires:
-            - authenticate-with-docker-hub
-            - build-app
+      - build-and-test:
+          filters:
+            branches:
+              only:
+                - master
