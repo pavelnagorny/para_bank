@@ -4,6 +4,9 @@ jobs:
   linter-check:
     docker:
       - image: ruby:3.2.2
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
@@ -12,23 +15,44 @@ jobs:
             bundle install
             bundle exec rubocop --format simple --fail-level E
 
-  build-app:
+  authenticate-with-docker-hub:
     docker:
-      - image: parasoft/parabank:latest
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
-      - image: ruby:3.2.2
-    working_directory: /usr/src/parabank
-
+      - image: docker:20.10.17
     steps:
       - checkout
-
-      # Run your tests in the second container
       - run:
-          name: Run Cucumber Tests
+          name: Authenticate with Docker Hub
+          command:
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+  build-app:
+    docker:
+      - image: docker:20.10.17
+    steps:
+      - checkout
+      - run:
+          name: Pull Test App Container
+          command: |
+            apt-get install sudo
+            sudo apt-get update
+            sudo systemctl status docker
+            sudo systemctl start docker
+            sudo usermod -aG docker $USER
+            sudo systemctl status docker
+            docker-compose pull webapp
+
+  run-tests:
+    docker:
+      - image: docker:20.10.17
+    steps:
+      - checkout
+      - run:
+          name: Build Container with Tests
           command: |
             docker-compose up -d webapp
+      - run:
+          name: Execute Tests
+          command: |
             docker-compose run tests
 
 workflows:
@@ -41,9 +65,11 @@ workflows:
               only:
                 - master
                 - circleci-project-setup
+      - authenticate-with-docker-hub
       - build-app:
-          filters:
-            branches:
-              only:
-                - master
-                - circleci-project-setup
+          requires:
+            - authenticate-with-docker-hub
+      - run-tests:
+          requires:
+            - authenticate-with-docker-hub
+            - build-app

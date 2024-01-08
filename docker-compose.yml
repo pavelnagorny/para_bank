@@ -1,7 +1,7 @@
 version: '3'
 services:
   webapp:
-    image: parabank:latest
+    image: parasoft/parabank:latest
     ports:
       - "8080:8080"
 
