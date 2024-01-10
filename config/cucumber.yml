@@ -1,2 +1,2 @@
-default: --format AllureCucumber::Formatter --out reports/allure-results
-parallel: -n 2 --format AllureCucumber::Formatter --out reports/allure-results
+default: "--format pretty --publish-quiet --color --format AllureCucumber::CucumberFormatter --out reports/allure-results"
+parallel: -n 2
