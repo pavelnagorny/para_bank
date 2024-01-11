@@ -1,0 +1,63 @@
+version: 2.1
+
+jobs:
+  linter-check:
+    docker:
+      - image: ruby:3.2.2
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - run:
+          name: Run RuboCop
+          command: |
+            bundle install
+            bundle exec rubocop --format simple --fail-level E
+
+  build-and-test:
+    docker:
+      - image: docker:20.10.17
+    steps:
+      - checkout
+      - run:
+          name: Authenticate with Docker Hub
+          command:
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+      - run:
+          name: Install Docker Compose
+          environment:
+            COMPOSE_VERSION: '1.29.2'
+          command: |
+            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
+      - setup_remote_docker
+
+      - run:
+          name: Build Webapp Container
+          command: |
+            docker-compose -f docker-compose.yml build webapp
+
+      - run:
+          name: Run Tests
+          command: |
+            docker-compose -f docker-compose.yml run tests
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - linter-check:
+          filters:
+            branches:
+              only:
+                - master
+                - circleci-project-setup
+      - build-and-test:
+          filters:
+            branches:
+              only:
+                - master
